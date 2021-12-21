@@ -3,32 +3,13 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2.0.1
-      with:
-        version: 6.20.3
-
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-        cache: 'pnpm'
-
-    - name: Install dependencies
-      run: pnpm install
-
-    - name: Run linter
-      run: npm run lint
-
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
+    - name: testechoscrets
+      run: echo '${{ secrets.CODECOV_TOKEN }}'
+    - run: echo ${{ secrets.CODECOV_TOKEN }}
     - name: Install pnpm
       uses: pnpm/action-setup@v2.0.1
       with:
@@ -49,24 +30,3 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2.0.1
-      with:
-        version: 6.20.3
-
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-        cache: 'pnpm'
-
-    - name: Install dependencies
-      run: pnpm install
-
-    - name: Build
-      run: npm run build
